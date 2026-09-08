@@ -32,53 +32,53 @@ class BoardTest {
     // ----- a new game ---------------------------------------------------------------------
 
     @Test
-    void aNewGameHasAnEmptyGrid() {
+    public void aNewGameHasAnEmptyGrid() {
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void aNewGameStartsWithPlayerX() {
+    public void aNewGameStartsWithPlayerX() {
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void aNewGameHasNoWinner() {
+    public void aNewGameHasNoWinner() {
         assertNull(board.getWinner());
     }
 
     @Test
-    void aNewGameIsInProgress() {
+    public void aNewGameIsInProgress() {
         assertTrue(board.isInProgressMode());
     }
 
     // ----- marking a cell -----------------------------------------------------------------
 
     @Test
-    void markPutsTheCurrentPlayerInTheChosenCell() {
+    public void markPutsTheCurrentPlayerInTheChosenCell() {
         play(1, 1);
         assertEquals("...|.X.|...", grid());
     }
 
     @Test
-    void playersAlternateAfterEachMark() {
+    public void playersAlternateAfterEachMark() {
         play(0, 0,  1, 1);
         assertEquals("X..|.O.|...", grid());
     }
 
     @Test
-    void markGivesTheTurnToO() {
+    public void markGivesTheTurnToO() {
         play(0, 0);
         assertSame(O, board.getCurrentTurn());
     }
 
     @Test
-    void markGivesTheTurnBackToX() {
+    public void markGivesTheTurnBackToX() {
         play(0, 0,  1, 1);
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void everyCornerIsPlayable() {
+    public void everyCornerIsPlayable() {
         play(0, 0,  0, 2,  2, 0,  2, 2);
         assertEquals("X.O|...|X.O", grid());
     }
@@ -86,43 +86,43 @@ class BoardTest {
     // ----- moves that must be ignored -----------------------------------------------------
 
     @Test
-    void markIsIgnoredAboveTheTopRow() {
+    public void markIsIgnoredAboveTheTopRow() {
         play(-1, 0);
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void markIsIgnoredBelowTheBottomRow() {
+    public void markIsIgnoredBelowTheBottomRow() {
         play(3, 0);
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void markIsIgnoredLeftOfTheFirstColumn() {
+    public void markIsIgnoredLeftOfTheFirstColumn() {
         play(0, -1);
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void markIsIgnoredRightOfTheLastColumn() {
+    public void markIsIgnoredRightOfTheLastColumn() {
         play(0, 3);
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void anOutOfBoundsMarkKeepsTheTurn() {
+    public void anOutOfBoundsMarkKeepsTheTurn() {
         play(3, 3);
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void markIsIgnoredOnAnAlreadyPlayedCell() {
+    public void markIsIgnoredOnAnAlreadyPlayedCell() {
         play(1, 1,  1, 1);
         assertEquals("...|.X.|...", grid());
     }
 
     @Test
-    void markOnAnAlreadyPlayedCellKeepsTheTurn() {
+    public void markOnAnAlreadyPlayedCellKeepsTheTurn() {
         play(1, 1,  1, 1);
         assertSame(O, board.getCurrentTurn());
     }
@@ -130,43 +130,43 @@ class BoardTest {
     // ----- the eight winning lines --------------------------------------------------------
 
     @Test
-    void xWinsOnTheTopRow() {
+    public void xWinsOnTheTopRow() {
         playTopRowWinByX();
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheMiddleRow() {
+    public void xWinsOnTheMiddleRow() {
         play(1, 0,  0, 0,  1, 1,  0, 1,  1, 2);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheBottomRow() {
+    public void xWinsOnTheBottomRow() {
         play(2, 0,  0, 0,  2, 1,  0, 1,  2, 2);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheLeftColumn() {
+    public void xWinsOnTheLeftColumn() {
         play(0, 0,  0, 1,  1, 0,  1, 1,  2, 0);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheMiddleColumn() {
+    public void xWinsOnTheMiddleColumn() {
         play(0, 1,  0, 0,  1, 1,  1, 0,  2, 1);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheRightColumn() {
+    public void xWinsOnTheRightColumn() {
         play(0, 2,  0, 0,  1, 2,  1, 0,  2, 2);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheMainDiagonal() {
+    public void xWinsOnTheMainDiagonal() {
         play(0, 0,  0, 1,  1, 1,  0, 2,  2, 2);
         assertSame(X, board.getWinner());
     }
@@ -175,19 +175,19 @@ class BoardTest {
     // anti-diagonal is checked from both of its ends.
 
     @Test
-    void xWinsOnTheAntiDiagonalEndingBottomLeft() {
+    public void xWinsOnTheAntiDiagonalEndingBottomLeft() {
         play(0, 2,  0, 0,  1, 1,  0, 1,  2, 0);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void xWinsOnTheAntiDiagonalEndingTopRight() {
+    public void xWinsOnTheAntiDiagonalEndingTopRight() {
         play(2, 0,  0, 0,  1, 1,  0, 1,  0, 2);
         assertSame(X, board.getWinner());
     }
 
     @Test
-    void oCanWinToo() {
+    public void oCanWinToo() {
         play(0, 0,  1, 0,  0, 1,  1, 1,  2, 2,  1, 2);
         assertSame(O, board.getWinner());
     }
@@ -195,7 +195,7 @@ class BoardTest {
     // ----- end of a won game --------------------------------------------------------------
 
     @Test
-    void winningEndsTheGame() {
+    public void winningEndsTheGame() {
         playTopRowWinByX();
         assertTrue(board.isInFinishedMode(), "a won game should be finished");
         assertFalse(board.isInProgressMode(), "a won game should no longer be in progress");
@@ -203,13 +203,13 @@ class BoardTest {
     }
 
     @Test
-    void theWinnerKeepsTheTurn() {
+    public void theWinnerKeepsTheTurn() {
         playTopRowWinByX();
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void marksAreIgnoredOnceTheGameIsWon() {
+    public void marksAreIgnoredOnceTheGameIsWon() {
         playTopRowWinByX();
         play(2, 2);
         assertEquals("XXX|OO.|...", grid());
@@ -218,13 +218,13 @@ class BoardTest {
     // ----- a game still running -----------------------------------------------------------
 
     @Test
-    void anUnfinishedGameHasNoWinner() {
+    public void anUnfinishedGameHasNoWinner() {
         play(0, 0,  1, 1);
         assertNull(board.getWinner());
     }
 
     @Test
-    void anUnfinishedGameStaysInProgress() {
+    public void anUnfinishedGameStaysInProgress() {
         play(0, 0,  1, 1);
         assertTrue(board.isInProgressMode());
     }
@@ -232,7 +232,7 @@ class BoardTest {
     // ----- draw ---------------------------------------------------------------------------
 
     @Test
-    void aFullGridWithoutAlignmentIsADraw() {
+    public void aFullGridWithoutAlignmentIsADraw() {
         playDrawnGame();
         assertTrue(board.isInDrawMode(), "a full grid without alignment should be a draw");
         assertFalse(board.isInProgressMode(), "a drawn game should no longer be in progress");
@@ -240,25 +240,25 @@ class BoardTest {
     }
 
     @Test
-    void aDrawnGameFillsTheWholeGrid() {
+    public void aDrawnGameFillsTheWholeGrid() {
         playDrawnGame();
         assertEquals("XOX|XOO|OXX", grid());
     }
 
     @Test
-    void aDrawLeavesNoWinner() {
+    public void aDrawLeavesNoWinner() {
         playDrawnGame();
         assertNull(board.getWinner());
     }
 
     @Test
-    void aDrawKeepsTheTurnOnTheLastPlayer() {
+    public void aDrawKeepsTheTurnOnTheLastPlayer() {
         playDrawnGame();
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void aWinOnTheLastFreeCellIsAWinNotADraw() {
+    public void aWinOnTheLastFreeCellIsAWinNotADraw() {
         play(0, 0,  0, 2,  1, 0,  1, 1,  0, 1,  2, 1,  1, 2,  2, 2,  2, 0);
         assertTrue(board.isInFinishedMode(), "the last free cell completed the left column");
         assertSame(X, board.getWinner(), "X played the winning last cell");
@@ -267,28 +267,28 @@ class BoardTest {
     // ----- restart ------------------------------------------------------------------------
 
     @Test
-    void restartClearsTheGrid() {
+    public void restartClearsTheGrid() {
         playTopRowWinByX();
         board.restart();
         assertEquals(EMPTY_GRID, grid());
     }
 
     @Test
-    void restartClearsTheWinner() {
+    public void restartClearsTheWinner() {
         playTopRowWinByX();
         board.restart();
         assertNull(board.getWinner());
     }
 
     @Test
-    void restartGivesTheTurnBackToX() {
+    public void restartGivesTheTurnBackToX() {
         play(0, 0);
         board.restart();
         assertSame(X, board.getCurrentTurn());
     }
 
     @Test
-    void restartMakesTheGamePlayableAgain() {
+    public void restartMakesTheGamePlayableAgain() {
         playTopRowWinByX();
         board.restart();
         play(2, 2);
@@ -298,7 +298,7 @@ class BoardTest {
     // ----- choosing who plays next --------------------------------------------------------
 
     @Test
-    void setCurrentTurnDecidesWhoMarksNext() {
+    public void setCurrentTurnDecidesWhoMarksNext() {
         board.setCurrentTurn(O);
         play(0, 0);
         assertEquals("O..|...|...", grid());
